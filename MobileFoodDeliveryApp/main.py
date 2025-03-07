@@ -70,11 +70,6 @@ class Application(tk.Tk):
         self.current_frame = MainAppFrame(self, email)
         self.current_frame.pack(fill="both", expand=True)
 
-    #New Feature 2: Password res
-    def reset_password(self, email):
-        # Implement password reset functionality here
-        pass
-
 
 class StartupFrame(tk.Frame):
     def __init__(self, master):

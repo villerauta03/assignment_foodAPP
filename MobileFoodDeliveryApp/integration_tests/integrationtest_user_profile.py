@@ -1,7 +1,7 @@
 import unittest
 import tkinter as tk
 from main import Application, MainAppFrame  #import classes where changes were made
-from User_Profile import UserProfilePage       # import user profile
+from User_Profile.py import UserProfilePage       # import user profile
 
 
 class TestIntegrationUserProfile(unittest.TestCase):

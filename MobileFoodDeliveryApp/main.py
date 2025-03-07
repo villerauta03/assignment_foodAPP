@@ -70,6 +70,11 @@ class Application(tk.Tk):
         self.current_frame = MainAppFrame(self, email)
         self.current_frame.pack(fill="both", expand=True)
 
+    #New Feature 2: Password res
+    def reset_password(self, email):
+        # Implement password reset functionality here
+        pass
+
 
 class StartupFrame(tk.Frame):
     def __init__(self, master):
@@ -292,7 +297,10 @@ class CheckoutPopup(tk.Toplevel):
         total = order_data["total_info"]
         tk.Label(self, text=f"Subtotal: ${total['subtotal']:.2f}").pack()
         tk.Label(self, text=f"Tax: ${total['tax']:.2f}").pack()
-        tk.Label(self, text=f"Delivery Fee: ${total['delivery_fee']:.2f}").pack()
+        if total['delivery_fee'] == 0:
+            tk.Label(self, text="Delivery Fee: Total over 80$, delivery is free.").pack()
+        else:
+            tk.Label(self, text=f"Delivery Fee: ${total['delivery_fee']:.2f}").pack()
         tk.Label(self, text=f"Total: ${total['total']:.2f}").pack()
 
         tk.Label(self, text=f"Delivery Address: {order_data['delivery_address']}").pack(pady=5)

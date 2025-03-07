@@ -121,6 +121,10 @@ class Cart:
         tax = subtotal * 0.10  # Assume 10% tax rate.
         delivery_fee = 5.00  # Flat delivery fee.
         total = subtotal + tax + delivery_fee
+        #Functionality for free delivery if total is over 80
+        if total > 80:
+            total = total-delivery_fee
+            delivery_fee = 0.00
         return {"subtotal": subtotal, "tax": tax, "delivery_fee": delivery_fee, "total": total}
 
     def view_cart(self):

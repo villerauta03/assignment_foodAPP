@@ -5,7 +5,7 @@ from tkinter import Tk
 from tkinter import messagebox
 
 # Assuming your application code is imported here
-from your_application import Application, PasswordRecoveryFrame, save_users, load_users
+from main.py import Application, PasswordRecoveryFrame, save_users, load_users
 
 class TestPasswordRecovery(unittest.TestCase):
 

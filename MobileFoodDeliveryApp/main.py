@@ -85,6 +85,41 @@ class StartupFrame(tk.Frame):
     def go_to_login(self):
         self.master.show_login_frame()
 
+class PasswordRecoveryFrame(tk.Frame):
+    def __init__(self, master):
+        super().__init__(master)
+        
+        tk.Label(self, text="Password Recovery", font=("Arial", 14)).pack(pady=20)
+        
+        self.email_entry = self.create_entry("Enter your email:")
+        
+        tk.Button(self, text="Reset Password", command=self.reset_password).pack(pady=10)
+        tk.Button(self, text="Back", command=self.go_back).pack()
+
+    def create_entry(self, label_text):
+        frame = tk.Frame(self)
+        frame.pack(pady=5)
+        tk.Label(frame, text=label_text, width=20, anchor="e").pack(side="left")
+        entry = tk.Entry(frame)
+        entry.pack(side="left")
+        return entry
+
+    def reset_password(self):
+        email = self.email_entry.get()
+        users = self.master.registration.users
+
+        if email in users:
+            new_password = "Temp1234"  # You can enhance this with a random generator
+            users[email]["password"] = new_password
+            save_users(users)
+            messagebox.showinfo("Success", f"Your new password is: {new_password}. Please log in and change it.")
+            self.master.show_login_frame()
+        else:
+            messagebox.showerror("Error", "Email not found.")
+
+    def go_back(self):
+        self.master.show_login_frame()
+
 
 class RegisterFrame(tk.Frame):
     def __init__(self, master):
@@ -135,6 +170,7 @@ class LoginFrame(tk.Frame):
         self.pass_entry = self.create_entry("Password:", show="*")
 
         tk.Button(self, text="Login", command=self.login).pack(pady=10)
+        tk.Button(self, text="Forgot Password?", command=self.go_to_recovery).pack(pady=5)
         tk.Button(self, text="Back", command=self.go_back).pack()
 
     def create_entry(self, label_text, show=None):
@@ -148,13 +184,14 @@ class LoginFrame(tk.Frame):
     def login(self):
         email = self.email_entry.get()
         password = self.pass_entry.get()
-        # Validate login
-        # For simplicity, just check if user exists and password matches
         users = self.master.registration.users
         if email in users and users[email]["password"] == password:
             self.master.login_user(email)
         else:
             messagebox.showerror("Error", "Invalid email or password")
+
+    def go_to_recovery(self):
+        self.master.show_recovery_frame()
 
     def go_back(self):
         self.master.show_startup_frame()

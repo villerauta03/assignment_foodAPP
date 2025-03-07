@@ -181,7 +181,49 @@ class TestPaymentProcessing(unittest.TestCase):
         # No need for mocking, the method will raise an error directly.
         result = self.payment_processing.process_payment(order, "bitcoin", payment_details)
         self.assertIn("Error: Invalid payment method", result)
-
+        
+class BitcoinPaymentGUI:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Bitcoin Payment")
+        self.master.geometry("400x300")
+        
+        tk.Label(master, text="Sender Address:").pack()
+        self.sender_entry = tk.Entry(master, width=50)
+        self.sender_entry.pack()
+        
+        tk.Label(master, text="Recipient Address:").pack()
+        self.recipient_entry = tk.Entry(master, width=50)
+        self.recipient_entry.pack()
+        
+        tk.Label(master, text="Amount:").pack()
+        self.amount_entry = tk.Entry(master, width=20)
+        self.amount_entry.pack()
+        
+        tk.Button(master, text="Submit Payment", command=self.process_payment).pack(pady=10)
+    
+    def process_payment(self):
+        sender_address = self.sender_entry.get()
+        recipient_address = self.recipient_entry.get()
+        amount = self.amount_entry.get()
+        
+        if len(sender_address) < 26 or len(recipient_address) < 26:
+            messagebox.showerror("Error", "Invalid Bitcoin address.")
+            return
+        
+        try:
+            amount = float(amount)
+            if amount <= 0:
+                raise ValueError("Amount must be greater than zero.")
+        except ValueError:
+            messagebox.showerror("Error", "Invalid amount.")
+            return
+        
+        messagebox.showinfo("Success", "Bitcoin payment processed successfully!")
+        self.master.quit()
 
 if __name__ == "__main__":
+    root = tk.Tk()
+    app = BitcoinPaymentGUI(root)
+    root.mainloop()
     unittest.main()  # Run the unit tests.

@@ -44,6 +44,20 @@ class Application(tk.Tk):
         self.current_frame = None
         self.show_startup_frame()
 
+    
+    #method to display profile page
+    def show_profile_page(self, user_email): 
+        if self.current_frame: 
+            self.current_frame.destroy() 
+    #Retrieve the user's data 
+        user_data = self.registration.users.get(user_email, {}) 
+    #Import UserProfilePage here 
+        from User_Profile import UserProfilePage 
+        self.current_frame = UserProfilePage(self, user_email, user_data)
+        self.current_frame.pack(fill="both", expand=True)
+        
+        
+
     def show_startup_frame(self):
         if self.current_frame:
             self.current_frame.destroy()
@@ -200,7 +214,11 @@ class LoginFrame(tk.Frame):
 class MainAppFrame(tk.Frame):
     def __init__(self, master, user_email):
         super().__init__(master)
+        header_frame = tk.Frame(self) #frame for header elements
+        header_frame.pack(pady=10) #padding for spacing
+        
         tk.Label(self, text=f"Welcome, {user_email}", font=("Arial", 14)).pack(pady=10)
+        tk.Button(header_frame, text="Profile", command=lambda: self.master.show_profile_page(user_email)).pack(side="left", padx=5) #button to call show_profile_page method 
 
         self.user_email = user_email
         self.database = master.database

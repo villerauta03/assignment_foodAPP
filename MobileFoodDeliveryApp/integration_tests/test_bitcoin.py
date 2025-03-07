@@ -1,6 +1,6 @@
 import unittest
 from unittest import mock
-from Payment_processing import PaymentProcessing  # Import PaymentProcessing class from the other file
+from Payment_Processing.py import PaymentProcessing  # Import PaymentProcessing class from the other file
 
 class TestBitcoinPaymentProcessing(unittest.TestCase):
     def setUp(self):

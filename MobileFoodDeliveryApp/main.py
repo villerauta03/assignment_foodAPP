@@ -84,6 +84,13 @@ class Application(tk.Tk):
         self.current_frame = MainAppFrame(self, email)
         self.current_frame.pack(fill="both", expand=True)
 
+    #ei ollut olemassa aiemmin (?) 
+    def show_recovery_frame(self):
+        if self.current_frame:
+            self.current_frame.destroy()
+        self.current_frame = PasswordRecoveryFrame(self)
+        self.current_frame.pack(fill="both", expand=True)
+
 
 class StartupFrame(tk.Frame):
     def __init__(self, master):
